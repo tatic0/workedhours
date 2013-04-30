@@ -70,23 +70,46 @@ l = linecache.getline(today,2)
 r = linecache.getline(today,3)
 g = linecache.getline(today,4)
 
-m = float(m.split(',')[1])
-m = datetime.datetime.fromtimestamp(m)
+try:
+  m = float(m.split(',')[1])
+  m = datetime.datetime.fromtimestamp(m)
+except IndexError:
+  pass
 
-l = float(l.split(',')[1])
-l = datetime.datetime.fromtimestamp(l)
+try:
+  l = float(l.split(',')[1])
+  l = datetime.datetime.fromtimestamp(l)
+except IndexError:
+  pass
 
-r = float(r.split(',')[1])
-r = datetime.datetime.fromtimestamp(r)
+try:
+  r = float(r.split(',')[1])
+  r = datetime.datetime.fromtimestamp(r)
+except IndexError:
+  pass
 
-g = float(g.split(',')[1])
-g = datetime.datetime.fromtimestamp(g)
+try:
+  g = float(g.split(',')[1])
+  g = datetime.datetime.fromtimestamp(g)
+except IndexError:
+  pass
+
 
 # here's the math part
-morn1 = l - m
-print morn1.seconds
-noon1 = g - r
-print noon1.seconds
-total = morn1 + noon1
-print("you worked: %s today") %total
+try:
+  morn1 = l - m
+  print morn1.seconds
+except TypeError:
+  morn1 = 0
 
+try:
+  noon1 = g - r
+  print noon1.seconds
+except TypeError:
+  noon1 = 0
+
+try:
+  total = morn1 + noon1
+  print("you worked: %s today") %total
+except TypeError:
+  print("you haven't finished the day")
