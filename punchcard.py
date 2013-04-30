@@ -21,7 +21,7 @@ lunch = arguments.lunch
 restartafterlunch = arguments.restartafterlunch
 gohome=arguments.gohome
 MORNING=LUNCH=RESTARTAFTERLUNCH=GOHOME=False
-# need to open 1 file per day instead of punchtime.db
+
 today = str(datetime.date.today()) + '.pc'
 
 # if there is an duplicate entry/day/dicto the first one counts
@@ -38,8 +38,8 @@ for line in dataonfile.readlines():
   if 'gohome' in line:
     GOHOME=True
 dataonfile.close()
-#print(MORNING,LUNCH,RESTARTAFTERLUNCH,GOHOME)
 
+# here I remove key from the dict to avoid double entries
 f = open(today,'a+')
 dicto =  {'morning':morning,'lunch':lunch,'restartafterlunch':restartafterlunch,'gohome':gohome}
 if MORNING  == True:
@@ -55,16 +55,16 @@ if GOHOME == True:
   print("Already went home")
   dicto.pop('gohome',None)
 
+# add new entry
 filedata = f.read()
 for i in dicto:
   if dicto[i]==True:
-    #data = filedata + i + "," + time.ctime() + "\n"
     data =  i + "," + str(time.time()) + "\n"
     print(data)
     f.write(data)
 f.close()
 
-
+# ugly way to read lines from a file
 m = linecache.getline(today,1)
 l = linecache.getline(today,2)
 r = linecache.getline(today,3)
@@ -82,24 +82,11 @@ r = datetime.datetime.fromtimestamp(r)
 g = float(g.split(',')[1])
 g = datetime.datetime.fromtimestamp(g)
 
-
+# here's the math part
 morn1 = l - m
 print morn1.seconds
 noon1 = g - r
 print noon1.seconds
 total = morn1 + noon1
 print("you worked: %s today") %total
-## now read the fucking file to see  how many time you've been working.
-#>>> import datetime
-#>>> a=datetime.datetime.fromtimestamp(1367332369.24)
-#>>> b=datetime.datetime.fromtimestamp(1367332379.82)
-#>>> c = b - a
-#>>> print c
-#0:00:10.580000
-#>>> c.seconds
-#10
-
-#>>> import linecache
-#>>> linecache.getline('2013-04-30.pc',1)
-#'morning,1367332369.24\n'
 
