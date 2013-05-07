@@ -46,7 +46,7 @@ if MORNING  == True:
   print("Already punched this morning")
   dicto.pop('morning',None)
 if LUNCH == True:
-  print("Already punched for lunck")
+  print("Already punched for lunch")
   dicto.pop('lunch',None)
 if RESTARTAFTERLUNCH == True:
   print("Already punched back from lunch")
@@ -60,7 +60,7 @@ filedata = f.read()
 for i in dicto:
   if dicto[i]==True:
     data =  i + "," + str(time.time()) + "\n"
-    print(data)
+    print("to be stored: %s") %data
     f.write(data)
 f.close()
 
@@ -98,13 +98,13 @@ except IndexError:
 # here's the math part
 try:
   morn1 = l - m
-  print morn1.seconds
+  print ("morning: %s") %morn1
 except TypeError:
   morn1 = 0
 
 try:
   noon1 = g - r
-  print noon1.seconds
+  print ("noon: %s") %noon1
 except TypeError:
   noon1 = 0
 
